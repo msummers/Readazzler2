@@ -1,5 +1,7 @@
 package com.mikeco.readazzler.services;
 
+import java.net.URL;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +10,10 @@ import org.springframework.stereotype.Service;
 
 import com.mikeco.readazzler.models.Feed;
 import com.mikeco.readazzler.repositories.FeedRepository;
+import com.rometools.rome.feed.synd.SyndEntry;
+import com.rometools.rome.feed.synd.SyndFeed;
+import com.rometools.rome.io.SyndFeedInput;
+import com.rometools.rome.io.XmlReader;
 
 @Service
 public class FeedReader {
@@ -19,14 +25,21 @@ public class FeedReader {
 	@Scheduled(fixedDelay = 1000 * 60 * 10)
 	public void readFeeds() {
 		log.info("readFeeds: enter");
-		/*
-		 *  org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'scopedTarget.getSession':
-Scope 'session' is not active for the current thread; consider defining a scoped proxy for this bean if you intend to refer to it from a singleton;
-nested exception is java.lang.IllegalStateException: No thread-bound request found: Are you referring to request attributes outside of an actual web request, or processing a request outside of the originally receiving thread? If you are actually operating within a web request and still receive this message, your code is probably running outside of DispatcherServlet/DispatcherPortlet: In this case, use RequestContextListener or RequestContextFilter to expose the current request.
-		 */
-		for(Feed feed : feedRepo.findAll()){
-		// For each entry in the feed
-		// Persist entry
+
+		for (Feed feed : feedRepo.findAll()) {
+			log.debug(String.format("readFeeds: %s folder: %s", feed.getRssUrl(), feed.getFolders().get(0).getLabel()));
+			try {
+				URL feedUrl = new URL(feed.getRssUrl());
+
+				SyndFeedInput input = new SyndFeedInput();
+				SyndFeed syndFeed = input.build(new XmlReader(feedUrl));
+				for(SyndEntry syndEntry : syndFeed.getEntries()){
+					//log.debug("readFeeds: " + syndFeed);
+				}
+			} catch (Exception e) {
+				log.error("Most likely this blog is gone");
+				log.error(e.getMessage());
+			}
 		}
 	}
 }

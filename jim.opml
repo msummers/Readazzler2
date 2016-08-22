@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<opml version="1.0">
+    <head>
+        <title>Jim subscriptions in feedly Cloud</title>
+    </head>
+    <body>
+        <outline text="F" title="F">
+            <outline type="rss" text="Sex, Lingerie, Pretty Things, Art, Porn" title="Sex, Lingerie, Pretty Things, Art, Porn" xmlUrl="http://orgasms-are-fun.tumblr.com/rss" htmlUrl="http://orgasms-are-fun.tumblr.com/"/>
+            <outline type="rss" text="Erotic Tonic" title="Erotic Tonic" xmlUrl="http://tanyadakin.tumblr.com/rss" htmlUrl="http://tanyadakin.tumblr.com/"/>
+        </outline>
+        <outline text="Retro" title="Retro">
+            <outline type="rss" text="Vintage Girls Rock" title="Vintage Girls Rock" xmlUrl="http://vintagegirlsrock.tumblr.com/rss" htmlUrl="http://vintagegirlsrock.tumblr.com/"/>
+            <outline type="rss" text="Tallulah Dreaming" title="Tallulah Dreaming" xmlUrl="http://tallulahdreaming.tumblr.com/rss" htmlUrl="http://tallulahdreaming.tumblr.com/"/>
+        </outline>
+        <outline text="Favorites" title="Favorites">
+            <outline type="rss" text="High Class In High Heels" title="High Class In High Heels" xmlUrl="http://highclass-in-highheels.tumblr.com/rss" htmlUrl="http://highclass-in-highheels.tumblr.com/"/>
+        </outline>
+        <outline text="Good Reads" title="Good Reads">
+            <outline type="rss" text="violet blue ® :: open source sex" title="violet blue ® :: open source sex" xmlUrl="http://feeds.feedburner.com/VioletBlueOpenSourceSex" htmlUrl="https://www.tinynibbles.com"/>
+            <outline type="rss" text="Museum of Sex Blog »  |  | Museum of Sex" title="Museum of Sex Blog »  |  | Museum of Sex" xmlUrl="http://blog.museumofsex.com/feed/" htmlUrl="http://www.museumofsex.com"/>
+            <outline type="rss" text="A Tiger Changing Her Stripes" title="A Tiger Changing Her Stripes" xmlUrl="http://tigerchangingherstripes.wordpress.com/feed/" htmlUrl="http://tigerchangingherstripes.wordpress.com"/>
+        </outline>
+    </body>
+</opml>
