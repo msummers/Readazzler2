@@ -1,6 +1,5 @@
 package com.mikeco.readazzler.configuration;
 
-import org.neo4j.graphdb.GraphDatabaseService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,14 +19,12 @@ public class StartupEventListener {
 	OpmlImport opmlImport;
 	@Autowired 
 	Neo4j neo4j;
-//	@Autowired
-//	GraphDatabaseService db;
 
 	@EventListener
 	public void onApplicationEvent(ContextRefreshedEvent event) {
 		log.info("Increment counter");
 		opmlImport.fromFileName("jim.opml");
-		//neo4j.neo4jBrowser(db);
+		neo4j.neo4jBrowser();
 		for(String name : appContext.getBeanDefinitionNames()){
 			if(name.toLowerCase().contains("neo"))
 			log.debug("Bean: " + name);

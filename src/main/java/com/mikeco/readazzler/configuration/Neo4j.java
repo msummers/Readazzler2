@@ -2,6 +2,8 @@ package com.mikeco.readazzler.configuration;
 
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.kernel.GraphDatabaseAPI;
+import org.neo4j.ogm.drivers.embedded.driver.EmbeddedDriver;
+import org.neo4j.ogm.service.Components;
 import org.neo4j.ogm.session.Session;
 import org.neo4j.ogm.session.SessionFactory;
 import org.neo4j.server.WrappingNeoServerBootstrapper;
@@ -16,6 +18,7 @@ import org.springframework.data.neo4j.config.Neo4jConfiguration;
 import org.springframework.data.neo4j.repository.config.EnableNeo4jRepositories;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+@SuppressWarnings("deprecation")
 @Configuration
 @EnableNeo4jRepositories(basePackages = "com.mikeco.readazzler")
 @EnableTransactionManagement
@@ -44,11 +47,12 @@ public class Neo4j extends Neo4jConfiguration {
 	}
 
 	@SuppressWarnings("deprecation")
-	public void neo4jBrowser(GraphDatabaseService db) {
-		
+	public void neo4jBrowser() {
+		EmbeddedDriver embeddedDriver = (EmbeddedDriver) Components.driver();
+		GraphDatabaseService gdb = embeddedDriver.getGraphDatabaseService();
 		try {
 			WrappingNeoServerBootstrapper neoServerBootstrapper;
-			GraphDatabaseAPI api = (GraphDatabaseAPI) db;
+			GraphDatabaseAPI api = (GraphDatabaseAPI) gdb;
 
 			ServerConfigurator config = new ServerConfigurator(api);
 			config.configuration()
