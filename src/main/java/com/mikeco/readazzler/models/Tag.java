@@ -3,15 +3,20 @@ package com.mikeco.readazzler.models;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.neo4j.ogm.annotation.GraphId;
-import org.neo4j.ogm.annotation.NodeEntity;
-import org.neo4j.ogm.annotation.Relationship;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 
-@NodeEntity
+
+@Entity
 public class Tag {
-	@Relationship(type = "TaggedEntry")
+	@ManyToMany
 	private List<Entry> entries = new ArrayList<Entry>();;
-	@GraphId
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
 	private String label;
 

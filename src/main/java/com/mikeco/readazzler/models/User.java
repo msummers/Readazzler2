@@ -3,22 +3,26 @@ package com.mikeco.readazzler.models;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.neo4j.ogm.annotation.GraphId;
-import org.neo4j.ogm.annotation.NodeEntity;
-import org.neo4j.ogm.annotation.Relationship;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
-@NodeEntity
+
+@Entity
 public class User {
-	@Relationship(type="DiscoveredFeed")
+	@OneToMany(mappedBy="user")
 	private List<Feed> discoveredFeeds = new ArrayList<Feed>();
 
-	@Relationship
+	@OneToMany(mappedBy="user")
 	private List<Folder> folders = new ArrayList<Folder>();
 
-	@Relationship(type="FollowedFeed")
+	@OneToMany(mappedBy="user")
 	private List<Feed> followedFeeds = new ArrayList<Feed>();
 	
-	@GraphId
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
 
 	private String name;

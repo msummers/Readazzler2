@@ -4,22 +4,27 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.neo4j.ogm.annotation.GraphId;
-import org.neo4j.ogm.annotation.NodeEntity;
-import org.neo4j.ogm.annotation.Relationship;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
-@NodeEntity
+@Entity
 public class Entry {
 	private String category;
 	private String description;
-	@Relationship
+	@ManyToOne
 	private Feed feed;
 	private String guid;
-	@GraphId
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
-	@Relationship(type = "LikedEntry")
-	private List<Feed> likes = new ArrayList<Feed>();
+	@ManyToMany
+	private List<Feed> likedBy = new ArrayList<Feed>();
 
 	// <description>
 	// <img src="http://66.media.tumblr.com/e696291bd37abe4161c5e67a0a07d02c/tumblr_ocbpciDt6E1u53c30o1_500.jpg"/><br/><br/><p><a class="tumblr_blog" href="http://obviousplant.tumblr.com/post/149329489293"
@@ -27,13 +32,16 @@ public class Entry {
 	// </description>
 	private String link;
 
-	@Relationship
+	@ManyToMany
 	private List<Media> media = new ArrayList<Media>();
 
 	private Date pubDate; // Mon, 22 Aug 2016 11:20:33 -0700
 
-	@Relationship(type = "RebloggedEntry")
+	@OneToMany(mappedBy = "id")
 	private List<Entry> reblogs = new ArrayList<Entry>();
+
+	@ManyToMany
+	private List<Tag> tags = new ArrayList<Tag>();
 
 	private String title;
 
@@ -57,8 +65,8 @@ public class Entry {
 		return id;
 	}
 
-	public List<Feed> getLikes() {
-		return likes;
+	public List<Feed> getLikedBy() {
+		return likedBy;
 	}
 
 	public String getLink() {
@@ -101,8 +109,8 @@ public class Entry {
 		this.id = id;
 	}
 
-	public void setLikes(List<Feed> likes) {
-		this.likes = likes;
+	public void setLikedBy(List<Feed> likes) {
+		this.likedBy = likes;
 	}
 
 	public void setLink(String link) {

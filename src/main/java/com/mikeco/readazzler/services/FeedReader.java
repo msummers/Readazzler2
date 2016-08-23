@@ -27,7 +27,7 @@ public class FeedReader {
 		log.info("readFeeds: enter");
 
 		for (Feed feed : feedRepo.findAll()) {
-			log.debug(String.format("readFeeds: %s folder: %s", feed.getRssUrl(), feed.getFolders().get(0).getLabel()));
+			log.debug(String.format("readFeeds: %s ", feed.getRssUrl()));
 			try {
 				URL feedUrl = new URL(feed.getRssUrl());
 

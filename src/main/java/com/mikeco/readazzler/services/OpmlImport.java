@@ -47,6 +47,7 @@ public class OpmlImport {
 		if (result.isEmpty()) {
 			folder = new Folder();
 			folder.setLabel(label);
+			folder.setUser(user);
 			folderRepo.save(folder);
 		} else
 			folder = result.get(0);
@@ -118,17 +119,20 @@ public class OpmlImport {
 			List<Feed> result = feedRepo.findByRssUrl(rssUrl);
 			if (result.isEmpty()) {
 				Feed feed = new Feed(type, title, rssUrl, siteUrl);
+				feed.setUser(user);
 				currentFolder.getFeeds()
 					.add(feed);
 				feed.getFolders()
 					.add(currentFolder);
+				user.getFollowedFeeds().add(feed);
 				feedRepo.save(feed);
 				folderRepo.save(currentFolder);
+				userRepo.save(user);
 			}
 
 		} catch (Exception e) {
 			LOG.error(line);
-			LOG.error(e.getMessage());
+			LOG.error(e.getMessage(), e);
 		}
 
 	}
@@ -154,6 +158,7 @@ public class OpmlImport {
 			if (result.isEmpty()) {
 				Folder folder = new Folder();
 				folder.setLabel(label);
+				folder.setUser(user);
 				user.getFolders()
 					.add(folder);
 				folderRepo.save(folder);
@@ -162,7 +167,7 @@ public class OpmlImport {
 			}
 		} catch (Exception e) {
 			LOG.error(line);
-			LOG.error(e.getMessage());
+			LOG.error(e.getMessage(), e);
 		}
 	}
 }
