@@ -1,0 +1,11 @@
+.classpath
+.git
+.mvn
+.project
+.settings
+
+data
+mvnw
+mvnw.cmd
+neo4j-home
+target
