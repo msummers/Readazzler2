@@ -8,6 +8,8 @@ import org.neo4j.ogm.annotation.GraphId;
 import org.neo4j.ogm.annotation.NodeEntity;
 import org.neo4j.ogm.annotation.Relationship;
 
+import com.rometools.rome.feed.synd.SyndEntry;
+
 @NodeEntity
 public class Entry {
 	private String category;
@@ -17,14 +19,11 @@ public class Entry {
 	private String guid;
 	@GraphId
 	private Long id;
+	private Boolean isRead = false;
 
 	@Relationship(type = "LikedEntry")
 	private List<Feed> likes = new ArrayList<Feed>();
 
-	// <description>
-	// <img src="http://66.media.tumblr.com/e696291bd37abe4161c5e67a0a07d02c/tumblr_ocbpciDt6E1u53c30o1_500.jpg"/><br/><br/><p><a class="tumblr_blog" href="http://obviousplant.tumblr.com/post/149329489293"
-	// target="_blank">obviousplant</a>:</p> <blockquote> <p>Try it, it’s fun!</p> </blockquote> <p>“Can you pass me the sex salt?”</p>
-	// </description>
 	private String link;
 
 	@Relationship
@@ -123,5 +122,13 @@ public class Entry {
 
 	public void setTitle(String title) {
 		this.title = title;
+	}
+
+	public Boolean getIsRead() {
+		return isRead;
+	}
+
+	public void setIsRead(Boolean isRead) {
+		this.isRead = isRead;
 	}
 }

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import com.mikeco.readazzler.models.Entry;
 import com.mikeco.readazzler.models.Feed;
 import com.mikeco.readazzler.repositories.FeedRepository;
 import com.rometools.rome.feed.synd.SyndEntry;
@@ -20,6 +21,8 @@ public class FeedReader {
 	Logger log = LoggerFactory.getLogger(FeedReader.class);
 	@Autowired
 	FeedRepository feedRepo;
+	@Autowired
+	EntryService entryService;
 
 	// Every 10 minutes
 	@Scheduled(fixedDelay = 1000 * 60 * 10)
@@ -27,15 +30,20 @@ public class FeedReader {
 		log.info("readFeeds: enter");
 
 		for (Feed feed : feedRepo.findAll()) {
-			log.debug(String.format("readFeeds: %s folder: %s", feed.getRssUrl(), feed.getFolders().get(0).getLabel()));
+			log.debug(String.format("readFeeds: %s folder: %s", feed.getRssUrl(), feed.getFolders()
+				.get(0)
+				.getLabel()));
 			try {
 				URL feedUrl = new URL(feed.getRssUrl());
 
 				SyndFeedInput input = new SyndFeedInput();
 				SyndFeed syndFeed = input.build(new XmlReader(feedUrl));
-				for(SyndEntry syndEntry : syndFeed.getEntries()){
-					//log.debug("readFeeds: " + syndFeed);
+				for (SyndEntry syndEntry : syndFeed.getEntries()) {
+					// log.debug("readFeeds: " + syndFeed);
+					feed.getEntries()
+						.add(entryService.findOrNew(syndEntry));
 				}
+				feedRepo.save(feed);
 			} catch (Exception e) {
 				log.error("Most likely this blog is gone");
 				log.error(e.getMessage());

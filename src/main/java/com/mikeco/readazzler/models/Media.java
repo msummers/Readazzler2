@@ -14,6 +14,24 @@ public class Media {
 	private List<Entry> entries = new ArrayList<Entry>();
 	@GraphId
 	private Long id;
+	public String getLink() {
+		return link;
+	}
+
+	public void setLink(String link) {
+		this.link = link;
+	}
+
+	public Boolean getIsRead() {
+		return isRead;
+	}
+
+	public void setIsRead(Boolean isRead) {
+		this.isRead = isRead;
+	}
+
+	private String link;
+	private Boolean isRead = false;
 
 	public List<Entry> getEntries() {
 		return entries;
